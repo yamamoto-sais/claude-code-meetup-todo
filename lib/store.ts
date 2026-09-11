@@ -76,6 +76,15 @@ export async function updateTodo(
   return todo;
 }
 
+export async function toggleTodo(id: string): Promise<Todo | null> {
+  const todos = await load();
+  const todo = todos.find((t) => t.id === id);
+  if (!todo) return null;
+  todo.completed = !todo.completed;
+  await save(todos);
+  return todo;
+}
+
 export async function deleteTodo(id: string): Promise<boolean> {
   const todos = await load();
   const next = todos.filter((t) => t.id !== id);
